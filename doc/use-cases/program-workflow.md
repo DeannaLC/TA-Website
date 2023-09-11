@@ -1,3 +1,4 @@
+```plantuml
 @startuml
 title Full Program Workflow
 
@@ -27,3 +28,4 @@ start
 :Submit final selections;
 stop
 @enduml
+```
