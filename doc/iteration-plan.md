@@ -28,3 +28,6 @@ Selection Edits
 
 Application Record
 -  Provide records of people's submissions
+
+Autosave
+- Save anything filled in if program is closed
