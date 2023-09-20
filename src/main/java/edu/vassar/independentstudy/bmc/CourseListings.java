@@ -7,6 +7,7 @@ import java.util.*;
  */
 public class CourseListings{
     ArrayList<Course> courses;
+    ArrayList<String> courseNames;
 
     public CourseListings(){
         this.courses = new ArrayList();
@@ -14,10 +15,12 @@ public class CourseListings{
 
     public void addCourse(Course course){
         this.courses.add(course);
+        //this.courseNames.add(course.className);
     }
 
     public void removeCourse(Course course){
         this.courses.remove(course);
+        //this.courseNames.remove(course.className);
     }
 
     public Course findCourse(String courseName){
@@ -57,6 +60,10 @@ public class CourseListings{
 
         cl.addCourse(test);
         cl.addCourse(test2);
+        System.out.println(cl.toString());
+
+        Course findRemove = cl.findCourse("CMPU-102");
+        cl.removeCourse(findRemove);
         System.out.println(cl.toString());
     }
 }

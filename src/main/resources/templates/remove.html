@@ -1,12 +1,28 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
+    <title>Course Removal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Form</h1>
+<form action="#" th:action="@{/remove}" th:object="${remove}" method="post">
+    <p>Course Name to Remove: <input type="text" th:field="*{className}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+<a href="/course">Back to Course Submission</a>
+</body>
+</html>
+<!--
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
     <title>Course Form Submission</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <h1>Form</h1>
-<form action="#" th:action="@{/course}" th:object="${course}" method="post">
+<form action="#" th:action="@{/remove}" th:object="${course}" method="post">
     <p>Course Name: <input type="text" th:field="*{className}" /></p>
     <p>Professor: <input type="text" th:field="*{professor}" /></p>
     <p>Class Start and End Time: <input type="text" th:field="*{classTime[0]}" /> <input type="text" th:field="*{classTime[1]}" /></p>
@@ -18,3 +34,4 @@
 <a href="/remove">Remove a course</a>
 </body>
 </html>
+-->

@@ -4,8 +4,6 @@ public class Course{
     String className;
     String professor;
     int section;
-    //even indexes are class time in military: 1000 = 10:00 am, 13:55 = 1:55 pm
-    //odd is day of the week(0 = monday, 4 = friday)
     String[] classTime = new String[4];
     String[] labTime = new String[3];
     int numCoaches;

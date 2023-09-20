@@ -10,13 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CourseListingsController {
     CourseListings courses = new CourseListings();
-    Course remove = new Course();
+    //Course remove = new Course();
 
     @GetMapping("/course")
     public String courseForm(Model model) {
         model.addAttribute("course", new Course());
-        //if (!(model.containsAttribute("coursesListing")))
-           // model.addAttribute(courses);
         model.addAttribute("coursesList", courses);
         return "course";
     }
@@ -34,8 +32,17 @@ public class CourseListingsController {
 
     @GetMapping("/remove")
     public String courseRemoveForm(Model model){
-        model.addAttribute("removing", remove);
+        model.addAttribute("remove", new Course());
         model.addAttribute("coursesList", courses);
         return "remove";
+    }
+
+    @PostMapping("/remove")
+    public String removeCourse(Course course, Model model){
+        model.addAttribute("remove", course);
+        model.addAttribute("coursesList", courses);
+        Course x = courses.findCourse(course.className);
+        courses.removeCourse(x);
+        return "removeresult";
     }
 }
