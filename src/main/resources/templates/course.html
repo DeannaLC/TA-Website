@@ -7,14 +7,26 @@
 <body>
 <h1>Form</h1>
 <form action="#" th:action="@{/course}" th:object="${course}" method="post">
-    <p>Course Name: <input type="text" th:field="*{className}" /></p>
-    <p>Professor: <input type="text" th:field="*{professor}" /></p>
-    <p>Class Start and End Time: <input type="text" th:field="*{classTime[0]}" /> <input type="text" th:field="*{classTime[1]}" /></p>
-    <p>Days of Week: <input type="text" th:field="*{classTime[2]}" /> <input type="text" th:field="*{classTime[3]}" /></p>
-    <p>Lab Start and End Time: <input type="text" th:field="*{labTime[0]}" /> <input type="text" th:field="*{labTime[1]}" /></p>
-    <p>Lab Day: <input type="text" th:field="*{labTime[2]}" /></p>
+    <p>Course Name: <input type="text" th:field="*{className}" required/></p>
+    <p>Professor: <input type="text" th:field="*{professor}" required/></p>
+    <p>Lab Start and End Time: <input type="time" th:field="*{labStart}" min="09:00" max="19:00" required/> <input type="time" th:field="*{labEnd}" min="09:00" max="21:00" required/></p>
+    <p>Lab Day:<br>
+        <input type="radio" id="M" th:field="*{labDay}" value="Monday"</input>
+        <label for="M">Monday</label><br>
+        <input type="radio" id="T" th:field="*{labDay}" value="Tuesday"</input>
+        <label for="M">Tuesday</label><br>
+        <input type="radio" id="W" th:field="*{labDay}" value="Wednesday"</input>
+        <label for="M">Wednesday</label><br>
+        <input type="radio" id="TH" th:field="*{labDay}" value="Thursday"</input>
+        <label for="TH">Thursday</label><br>
+        <input type="radio" id="F" th:field="*{labDay}" value="Friday"</input>
+        <label for="F">Friday</label><br>
+    </p>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 <a href="/remove">Remove a course</a>
+<p>
+    <a href="/addedcourses">View added courses</a>
+</p>
 </body>
 </html>

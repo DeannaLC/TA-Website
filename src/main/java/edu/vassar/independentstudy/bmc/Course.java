@@ -1,20 +1,73 @@
 package edu.vassar.independentstudy.bmc;
+import org.springframework.data.annotation.Id;
 
 public class Course{
+
+    @Id
+    String id;
     String className;
     String professor;
     int section;
-    String[] classTime = new String[4];
-    String[] labTime = new String[3];
+    String labStart;
+    String labEnd;
+    Day labDay;
     int numCoaches;
+    String grade;
+    boolean available;
+    int preference;
 
-    public Course(String className, String professor, int section, String[] classTime, String[] labTime, int numCoaches){
+    public Course(String className, String professor, int section, String labStart, String labEnd, int numCoaches){
         this.className = className;
         this.professor = professor;
         this.section = section;
-        this.classTime = classTime;
-        this.labTime = labTime;
+        this.labStart = labStart;
+        this.labEnd = labEnd;
         this.numCoaches = numCoaches;
+    }
+
+    public Course courseCopy(){
+        Course c = new Course();
+        c.setGrade(this.grade);
+        c.setAvailable(this.available);
+        c.setLabStart(this.labStart);
+        c.setLabEnd(this.labEnd);
+        c.setLabDay(this.labDay);
+        c.setPreference(this.preference);
+        c.setSection(this.section);
+        c.setProfessor(this.professor);
+        c.setClassName(this.className);
+        return c;
+    }
+    enum Day{
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public int getPreference() {
+        return preference;
+    }
+
+    public void setPreference(int preference) {
+        this.preference = preference;
     }
 
     public Course(){}
@@ -29,14 +82,6 @@ public class Course{
 
     public int getSection(){
         return section;
-    }
-
-    public String[] getClassTime(){
-        return classTime;
-    }
-
-    public String[] getLabTime(){
-        return labTime;
     }
 
     public int getNumCoaches(){
@@ -55,27 +100,39 @@ public class Course{
         this.section = section;
     }
 
-    public void setClassTime(String[] classTime) {
-        this.classTime = classTime;
-    }
-
-    public void setLabTime(String[] labTime) {
-        this.labTime = labTime;
-    }
-
     public void setNumCoaches(int numCoaches) {
         this.numCoaches = numCoaches;
     }
 
     public String toString(){
-        return String.format("%s Section 0%s \nProfessor %s \nClass Times: %s - %s, %s, %s \nLab: %s - %s %s\n", this.className, this.section, this.professor, this.classTime[0], this.classTime[1], this.classTime[2], this.classTime[3], this.labTime[0], this.labTime[1], this.labTime[2]);
+        return String.format("%s Section 0%s \nProfessor %s \nLab: %s - %s %s\n", this.className, this.section, this.professor, this.labStart, this.labEnd, this.labDay);
+    }
+    public String getLabStart() {
+        return labStart;
+    }
+
+    public void setLabStart(String labStart) {
+        this.labStart = labStart;
+    }
+
+    public String getLabEnd() {
+        return labEnd;
+    }
+
+    public void setLabEnd(String labEnd) {
+        this.labEnd = labEnd;
+    }
+
+    public Day getLabDay() {
+        return labDay;
+    }
+
+    public void setLabDay(Day labDay) {
+        this.labDay = labDay;
     }
 
     public static void main(String args[]){
-        String[] x = new String[]{"10:30", "11:45", "Tuesday", "Thursday"};
         String[] y = new String[]{"9:00", "11:00", "Friday"};
 
-        Course test = new Course("CMPU-101", "Smith", 2, x, y, 3);
-        System.out.println(test.toString());
     }
 }

@@ -18,6 +18,20 @@ public class CourseListings{
         //this.courseNames.add(course.className);
     }
 
+    public ArrayList<Course> getCoursesCopy(){
+        ArrayList<Course> ret = new ArrayList<>();
+        Course cur;
+        for (int i = 0; i < courses.size(); i = i + 1){
+            cur = this.courses.get(i);
+            ret.add(cur.courseCopy());
+        }
+        return ret;
+    }
+
+    public ArrayList<Course> getCourses(){
+        return this.courses;
+    }
+
     public void removeCourse(Course course){
         this.courses.remove(course);
         //this.courseNames.remove(course.className);
@@ -44,26 +58,26 @@ public class CourseListings{
         return ret;
     }
 
+    public void setCourses(ArrayList<Course> courses) {
+        this.courses = courses;
+    }
     public static void main(String args[]){
-        CourseListings cl = new CourseListings();
-        String[] x = new String[]{"10:30", "11:45", "Tuesday", "Thursday"};
-        String[] y = new String[]{"9:00", "11:00", "Friday"};
+        Course a = new Course();
+        Course b = new Course();
+        a.setClassName("CMPU");
+        b.setClassName("CMPU2");
+        CourseListings x = new CourseListings();
+        x.addCourse(a);
+        x.addCourse(b);
 
-        Course test = new Course("CMPU-101", "Smith", 2, x, y, 3);
-        System.out.println(test.toString());
+        ArrayList<Course> u = x.getCoursesCopy();
+        for (int i = 0; i < 2; i = i + 1){
+            System.out.println(u.get(i).toString());
+        }
 
-        String[] a = new String[]{"1:30", "2:45", "Tuesday", "Thursday"};
-        String[] b = new String[]{"11:00", "1:00", "Friday"};
-
-        Course test2 = new Course("CMPU-102", "Goodwin", 2, a, b, 3);
-        System.out.println(test2.toString());
-
-        cl.addCourse(test);
-        cl.addCourse(test2);
-        System.out.println(cl.toString());
-
-        Course findRemove = cl.findCourse("CMPU-102");
-        cl.removeCourse(findRemove);
-        System.out.println(cl.toString());
+        Student s = new Student(u);
+        for (int i = 0; i < 2; i = i + 1){
+            System.out.println(s.getClassSelection().get(i).toString());
+        }
     }
 }
