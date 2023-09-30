@@ -14,7 +14,7 @@ public class Course{
     int numCoaches;
     String grade;
     boolean available;
-    int preference;
+    int classPreference;
 
     public Course(String className, String professor, int section, String labStart, String labEnd, int numCoaches){
         this.className = className;
@@ -32,7 +32,7 @@ public class Course{
         c.setLabStart(this.labStart);
         c.setLabEnd(this.labEnd);
         c.setLabDay(this.labDay);
-        c.setPreference(this.preference);
+        c.setClassPreference(this.classPreference);
         c.setSection(this.section);
         c.setProfessor(this.professor);
         c.setClassName(this.className);
@@ -62,12 +62,12 @@ public class Course{
         this.available = available;
     }
 
-    public int getPreference() {
-        return preference;
+    public int getClassPreference() {
+        return this.classPreference;
     }
 
-    public void setPreference(int preference) {
-        this.preference = preference;
+    public void setClassPreference(int classPreference) {
+        this.classPreference = classPreference;
     }
 
     public Course(){}

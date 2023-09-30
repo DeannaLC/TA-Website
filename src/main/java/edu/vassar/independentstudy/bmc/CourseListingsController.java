@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 
@@ -41,7 +40,7 @@ public class CourseListingsController {
     public String removeCourse(@ModelAttribute Course course, Model model){
         model.addAttribute("remove", course);
         model.addAttribute("coursesList", classes);
-        Course x = classes.findCourse(course.className);
+        Course x = classes.findCourse(course.getClassName());
         classes.removeCourse(x);
         return "removeresult";
     }
@@ -60,9 +59,10 @@ public class CourseListingsController {
     @GetMapping("/coaches")
     public String makeAppForm(Model model){
         ArrayList<Course> selections = classes.getCoursesCopy();
-        Student.courseArrayToString(selections);
-        model.addAttribute("selections", selections);
-        model.addAttribute("student", new Student(selections));
+        System.out.println(Student.courseArrayToString(selections));
+        Student student = new Student();
+        student.setClassSelection(selections);
+        model.addAttribute("student", student);
         return "coaches";
     }
 
@@ -77,5 +77,19 @@ public class CourseListingsController {
         students.addStudent(student);
         System.out.println(student.toString());
         return "coachessubmitted";
+    }
+
+    @GetMapping("/faculty")
+    public String facultySubmissions(Model model){
+        model.addAttribute("faculty", new Faculty());
+        return "faculty";
+    }
+
+    @PostMapping("/faculty")
+    public String facultyNameSubmitted(Model model, Faculty faculty){
+        ArrayList<Student> availableStudents = students.filteredList(faculty.getName());
+        faculty.setStudentChoices(availableStudents);
+        model.addAttribute("faculty", faculty);
+        return "faculty2";
     }
 }

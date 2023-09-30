@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<head>
+    <title>Faculty Coach Selection</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form action="#" th:action="@{/faculty}" method="post" th:object="${faculty}">
+    <div class = "nameField">
+        <p>Name: <input type="text" th:field="*{name}" required/></p>
+    </div>
+    <tr th:each="student,idx : ${faculty.studentChoices}">
+        <p th:text="${student.name}"/>
+        <p th:text="${student.vassarID}"/>
+        <p />
+        <tr th:each="course, indx : $faculty.studentChoices.classSelection">
+            <p th:text="${course.className}" />
+            <p th:text="'Grade: ' + ${course.grade}"/>
+        </tr>
+    <div class = "comments">
+        <p>Extra Comments: <input type="text" th:field="*{comments}"/></p>
+    </div>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>

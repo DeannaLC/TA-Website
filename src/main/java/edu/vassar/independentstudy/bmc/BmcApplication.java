@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BmcApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(edu.vassar.independentstudy.bmc.BmcApplication.class, args);
+		SpringApplication.run(BmcApplication.class, args);
 	}
 	@GetMapping("/coaching")
 	public String coachApps(@RequestParam(value = "clearance", defaultValue = "Student") String name) {

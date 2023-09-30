@@ -5,20 +5,25 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<form action="#" th:action="@{/coaches}" method="post">
-    <div class = "nameField", th:object="${student}">
+<form action="#" th:action="@{/coaches}" method="post" th:object="${student}">
+    <div class = "nameField">
         <p>Name: <input type="text" th:field="*{name}" required/></p>
+        <p>Student ID: <input type="number" th:field="*{vassarID}" required/></p>
     </div>
-    <tr th:each="course,idx : ${student.getClassSelection()}">
-        <div class = "dynamic", th:object="${student.getClassSelection().get(idx.index)}">
-            <p th:text="${student.getClassSelection().get(idx.index).className}" />
-            <p th:text="'Professor: ' + ${student.getClassSelection().get(idx.index).professor}" />
-            <p th:text="'Lab Time: ' + ${student.getClassSelection().get(idx.index).labStart} + ' - ' + ${student.getClassSelection().get(idx.index).labEnd} + ' ' + ${student.getClassSelection().get(idx.index).labDay}"></p>
-            <p> Grade: <input type="text" th:field="*{classSelection[__${idx.index}__].grade}" required/></p>
-            <p> Preference: <input type="number" th:field="*{classSelection[__${idx.index}__].preference}" min="0" max="10" required/></p>
-        </div>
+    <tr th:each="course,idx : ${student.classSelection}">
+        <p th:text="${course.className}" />
+        <p th:text="'Professor: ' + ${course.professor}" />
+        <p th:text="'Lab Time: ' + ${course.labStart} + ' - ' + ${course.labEnd} + ' ' + ${course.labDay}"></p>
+        <p> Availability: <br>
+            <input type="radio" id="a" th:field="*{classSelection[__${idx.index}__].available}" value="true"</input>
+            <label for="a">Available</label><br>
+            <input type="radio" id="n" th:field="*{classSelection[__${idx.index}__].available}" value="false"</input>
+            <label for="n">Unavailable</label><br>
+        </p>
+        <p> Grade: <input th:field="*{classSelection[__${idx.index}__].grade}"/> </p>
+        <p> Preference: <input th:field="*{classSelection[__${idx.index}__].classPreference}"/> </p>
     </tr>
-    <div class = "comments", th:object="${student}">
+    <div class = "comments">
         <p>Extra Comments: <input type="text" th:field="*{comments}"/></p>
     </div>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
