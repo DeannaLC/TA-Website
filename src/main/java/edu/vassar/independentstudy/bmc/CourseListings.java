@@ -1,5 +1,6 @@
 package edu.vassar.independentstudy.bmc;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -7,7 +8,6 @@ import java.util.*;
  */
 public class CourseListings{
     ArrayList<Course> courses;
-    ArrayList<String> courseNames;
 
     public CourseListings(){
         this.courses = new ArrayList();
@@ -34,15 +34,14 @@ public class CourseListings{
 
     public void removeCourse(Course course){
         this.courses.remove(course);
-        //this.courseNames.remove(course.className);
     }
 
-    public Course findCourse(String courseName){
+    public Course findCourse(String courseName, int section){
         Course ret = null;
         Course cur;
         for (int i = 0; i < this.courses.size(); i = i + 1) {
             cur = this.courses.get(i);
-            if (cur.getClassName().equals(courseName)) {
+            if (cur.getClassName().equals(courseName) && (cur.getSection() == section)) {
                 ret = cur;
                 break;
             }

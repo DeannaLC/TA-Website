@@ -15,6 +15,7 @@ public class Course{
     String grade;
     boolean available;
     int classPreference;
+    int facultyPreference;
 
     public Course(String className, String professor, int section, String labStart, String labEnd, int numCoaches){
         this.className = className;
@@ -129,6 +130,10 @@ public class Course{
 
     public void setLabDay(Day labDay) {
         this.labDay = labDay;
+    }
+
+    public boolean getAvailable(){
+        return this.available;
     }
 
     public static void main(String args[]){

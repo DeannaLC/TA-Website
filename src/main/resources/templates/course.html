@@ -9,6 +9,7 @@
 <form action="#" th:action="@{/course}" th:object="${course}" method="post">
     <p>Course Name: <input type="text" th:field="*{className}" required/></p>
     <p>Professor: <input type="text" th:field="*{professor}" required/></p>
+    <p>Section: <input type="number" th:field="*{section}" required</p>
     <p>Lab Start and End Time: <input type="time" th:field="*{labStart}" min="09:00" max="19:00" required/> <input type="time" th:field="*{labEnd}" min="09:00" max="21:00" required/></p>
     <p>Lab Day:<br>
         <input type="radio" id="M" th:field="*{labDay}" value="Monday"</input>

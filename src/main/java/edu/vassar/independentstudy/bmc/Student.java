@@ -1,10 +1,19 @@
 package edu.vassar.independentstudy.bmc;
 
+import com.mongodb.lang.NonNull;
+
+import jakarta.validation.constraints.Size;
+
+
+
 import java.util.*;
 public class Student {
     String name;
     String comments;
     int facultyPreference;
+
+    @Size(min=9, max=9)
+    @NonNull
     int vassarID;
     ArrayList<Course> classSelection = new ArrayList<Course>();
 
@@ -58,10 +67,33 @@ public class Student {
         this.vassarID = vassarID;
     }
 
-    public static String courseArrayToString(ArrayList<Course> classes){
+    public static String arrayToString(ArrayList classes){
         String ret = "Courses: \n";
         for (int i = 0; i < classes.size(); i = i + 1){
             ret = "\n" + ret + classes.get(i).toString();
+        }
+        return ret;
+    }
+
+    public ArrayList<Course> getCoursesCopy(){
+        ArrayList<Course> ret = new ArrayList<>();
+        Course cur;
+        for (int i = 0; i < classSelection.size(); i = i + 1){
+            cur = this.classSelection.get(i);
+            ret.add(cur.courseCopy());
+        }
+        return ret;
+    }
+
+    public ArrayList<Course> filterCourses(String professor){
+        ArrayList<Course> ret = new ArrayList<>();
+        ArrayList<Course> copy = this.getCoursesCopy();
+        Course cur;
+        for (int i = 0; i < copy.size(); i = i + 1) {
+            cur = copy.get(i).courseCopy();
+            if (cur.getProfessor().equals(professor) && cur.getAvailable()){
+                ret.add(cur);
+            }
         }
         return ret;
     }

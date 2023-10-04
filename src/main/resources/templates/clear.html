@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Repository Deletion</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Form</h1>
+<form action="#" th:action="@{/clearall}" th:object="${remove}" method="post">
+    <!--
+    <p>Choose Repos to Clear</p>
+        <input type="checkbox" id="courses" th:field="*{courseClear}" value="${true}"</input>
+        <label for="courses"> Remove All Courses</label><br>
+        <input type="checkbox" id="students" th:field="*{studentClear}" value="${true}"</input>
+        <label for="students"> Remove All Students</label><br>
+        <input type="checkbox" id="faculty" th:field="*{facultyClear}" value="${true}"</input>
+        <label for="courses"> Remove All Faculty</label><br>-->
+    <p>Submit to clear all data</p>
+    <p><input type="submit" value="Submit" /></p>
+</form>
+<a href="/course">Back to Course Submission</a>
+</body>
+</html>

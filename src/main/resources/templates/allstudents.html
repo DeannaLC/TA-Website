@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>all students</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>All Student Submissions</h1>
+<tr th:each="student: ${studentList.studentList}">
+    <p th:text="${student.toString()}"/>
+</tr>
+<a href="/course">Back</a>
+</body>
+</html>

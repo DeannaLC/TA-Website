@@ -15,14 +15,25 @@
         <p th:text="'Professor: ' + ${course.professor}" />
         <p th:text="'Lab Time: ' + ${course.labStart} + ' - ' + ${course.labEnd} + ' ' + ${course.labDay}"></p>
         <p> Availability: <br>
-            <input type="radio" id="a" th:field="*{classSelection[__${idx.index}__].available}" value="true"</input>
-            <label for="a">Available</label><br>
-            <input type="radio" id="n" th:field="*{classSelection[__${idx.index}__].available}" value="false"</input>
-            <label for="n">Unavailable</label><br>
+            <input type="radio" id="available" th:field="*{classSelection[__${idx.index}__].available}" value="true"</input>
+            <label for="available">Available</label><br>
+            <input type="radio" id="not" th:field="*{classSelection[__${idx.index}__].available}" value="false"</input>
+            <label for="not">Unavailable</label><br>
         </p>
-        <p> Grade: <input th:field="*{classSelection[__${idx.index}__].grade}"/> </p>
+        <!--<p> Grade: <input th:field="*{classSelection[__${idx.index}__].grade}"/> </p>-->
+        <p>Course Grade:<br>
+            <input type="radio" name="grades" id="A" th:field="*{classSelection[__${idx.index}__].grade}" value="A" required</input>
+            <label for="A">A</label>
+            <input type="radio" name="grades" id="B" th:field="*{classSelection[__${idx.index}__].grade}" value="B"</input>
+            <label for="B">B</label>
+            <input type="radio" name="grades" id="C" th:field="*{classSelection[__${idx.index}__].grade}" value="C"</input>
+            <label for="C">C</label>
+            <input type="radio" name="grades" id="D" th:field="*{classSelection[__${idx.index}__].grade}" value="D"</input>
+            <label for="D">D</label>
+            <input type="radio" name="grades" id="F" th:field="*{classSelection[__${idx.index}__].grade}" value="F"</input>
+            <label for="F">F</label>
+        </p>
         <p> Preference: <input th:field="*{classSelection[__${idx.index}__].classPreference}"/> </p>
-    </tr>
     <div class = "comments">
         <p>Extra Comments: <input type="text" th:field="*{comments}"/></p>
     </div>

@@ -5,18 +5,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<form action="#" th:action="@{/faculty}" method="post" th:object="${faculty}">
-    <div class = "nameField">
-        <p>Name: <input type="text" th:field="*{name}" required/></p>
-    </div>
-    <tr th:each="student,idx : ${faculty.studentChoices}">
-        <p th:text="${student.name}"/>
-        <p th:text="${student.vassarID}"/>
-        <p />
-        <tr th:each="course, indx : $faculty.studentChoices.classSelection">
+<form action="#" th:action="@{/facultysubmitted}" method="post" th:object="${faculty}">
+    <span th:each="student,idx : ${faculty.studentChoices}">
+        <p th:text="'Name: ' + ${student.name}"/>
+        <p th:text="'ID: ' + ${student.vassarID}"/>
+        <tr th:each="course : ${student.classSelection}">
             <p th:text="${course.className}" />
             <p th:text="'Grade: ' + ${course.grade}"/>
         </tr>
+        <p> Preference: <input type="number" th:field="*{studentChoices[__${idx.index}__].facultyPreference}"/> </p>
+    </span>
     <div class = "comments">
         <p>Extra Comments: <input type="text" th:field="*{comments}"/></p>
     </div>

@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1>Course Classes</h1>
-    <tr th:each="course: ${coursesList.getCourses()}">
-        <p th:text="${course.getClassName}"/>
+    <tr th:each="course: ${coursesList.courses}">
+        <p th:text="${course.className} + ' Section ' + ${course.section}"/>
     </tr>
     <a href="/course">Back</a>
 </body>
