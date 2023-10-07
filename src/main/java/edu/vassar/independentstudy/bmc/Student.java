@@ -101,7 +101,7 @@ public class Student {
     public String toString(){
         String ret = "Name: " + this.name + ", Comments: " + this.comments;
         for (int i = 0; i < this.classSelection.size(); i = i + 1){
-            ret = ret + "Class " + i + ": Grade = " + this.classSelection.get(i).getGrade() + ", Ranking: " + this.classSelection.get(i).getClassPreference() + "\n";
+            ret = ret + "\nClass " + i + ": Grade = " + this.classSelection.get(i).getGrade() + ", Ranking: " + this.classSelection.get(i).getClassPreference() + ", Faculty Preference: " + this.classSelection.get(i).getFacultyPreference() + "\n";
         }
         return ret;
     }

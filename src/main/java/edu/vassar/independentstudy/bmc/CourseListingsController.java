@@ -236,4 +236,49 @@ public class CourseListingsController {
         model.addAttribute("facultyList", this.facultyMembers);
         return "allfaculty";
     }
+
+    @GetMapping("/tabletest")
+    public String tableTest(Model model){
+       // System.out.println(classes.toString());
+       // System.out.println(classes.getCourses().size());
+        ArrayList<Student> extra = students.studentsCopy();
+        StudentList studentList = new StudentList();
+        studentList.setStudentList(extra);
+        //System.out.println(studentList.toString());
+        System.out.println(studentList.getStudentList().size());
+        for(int i = 0; i < studentList.getStudentList().size(); i = i + 1){
+            System.out.println(studentList.getStudentList().get(i).toString());
+        }
+        model.addAttribute("studentList", studentList);
+        model.addAttribute("coursesList", classes);
+        return "tabletest";
+    }
+
+    @PostMapping("/tabletest")
+    public String tableTest2(Model model, @ModelAttribute StudentList studentList){
+        Student student;
+        ArrayList<Student> compare = students.getStudentList();
+        int savePref;
+        Course curCourse;
+        for(int k = 0; k < studentList.getStudentList().size(); k = k + 1) {
+            student = studentList.getStudentList().get(k);
+            student.setName(compare.get(k).getName());
+            student.setComments(compare.get(k).getComments());
+            student.setVassarID(compare.get(k).getVassarID());
+            for (int i = 0; i < student.getClassSelection().size(); i = i + 1) {
+                curCourse = student.getClassSelection().get(i);
+                curCourse.setClassName(classes.getCourses().get(i).getClassName());
+                curCourse.setProfessor(classes.getCourses().get(i).getProfessor());
+                curCourse.setLabDay(classes.getCourses().get(i).getLabDay());
+                curCourse.setLabStart(classes.getCourses().get(i).getLabStart());
+                curCourse.setLabEnd(classes.getCourses().get(i).getLabEnd());
+                curCourse.setGrade(compare.get(k).getClassSelection().get(i).getGrade());
+                curCourse.setClassPreference(compare.get(k).getClassSelection().get(i).getClassPreference());
+                curCourse.setAvailable(compare.get(k).getClassSelection().get(i).getAvailable());
+            }
+        }
+        this.students.setStudentList(studentList.getStudentList());
+        model.addAttribute("studentList", studentList);
+        return "tabletest2";
+    }
 }

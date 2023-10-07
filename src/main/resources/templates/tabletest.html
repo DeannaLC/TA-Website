@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<style>
+    table, th, td {
+  border:1px solid black;
+}
+</style>
+<head>
+    <title>Student Submissions</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <form action="#" th:action="@{/tabletest}" method="post" th:object="${studentList}">
+    <table style="width:100%">
+        <tr>
+            <th>&nbsp</th>
+            <th th:each="course: ${coursesList.courses}" th:text="${course.className} + ' Section: ' + ${course.professor}"></th>
+        </tr>
+        <tr th:each="student, idx: ${studentList.studentList}">
+            <td>
+                <p th:text="${student.name}"/>
+                <p th:text="${student.vassarID}"/>
+            </td>
+            <td th:each="coursePref, indx: ${student.classSelection}">
+                <p th:text="'Available: ' + ${coursePref.available}"/>
+                <p th:text="'Grade: ' + ${coursePref.grade}"/>
+                <p th:text="'Student Preference: ' + ${coursePref.classPreference}"/>
+                <p th:text="'Previous Faculty Preference:' + ${coursePref.facultyPreference}"/>
+                <p> Preference: <input th:value="${coursePref.facultyPreference}" th:field="*{studentList[__${idx.index}__].classSelection[__${indx.index}__].facultyPreference}"/> </p>
+            </td>
+        </tr>
+    </table>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+</head>
+<body>
+
+
+
+</body>
+</html>

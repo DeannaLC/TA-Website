@@ -16,6 +16,7 @@ public class Course{
     boolean available;
     int classPreference;
     int facultyPreference;
+   //// int facultyPreference;
 
     public Course(String className, String professor, int section, String labStart, String labEnd, int numCoaches){
         this.className = className;
@@ -37,6 +38,7 @@ public class Course{
         c.setSection(this.section);
         c.setProfessor(this.professor);
         c.setClassName(this.className);
+        c.setFacultyPreference(this.facultyPreference);
         return c;
     }
     enum Day{
@@ -72,6 +74,22 @@ public class Course{
     }
 
     public Course(){}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getFacultyPreference() {
+        return facultyPreference;
+    }
+
+    public void setFacultyPreference(int facultyPreference) {
+        this.facultyPreference = facultyPreference;
+    }
 
     public String getClassName(){
         return className;
