@@ -7,7 +7,7 @@
 <body>
 <h1>Form</h1>
 <form action="#" th:action="@{/remove}" th:object="${remove}" method="post">
-    <p>Course Name to Remove: <input type="text" th:field="*{className}" required/></p>
+    <p>Course Name to Remove: <input type="text" th:field="*{name}" required/></p>
     <p>Course Section: <input type ="number" th:field="*{section}" required</p>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>

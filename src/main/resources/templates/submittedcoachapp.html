@@ -1,20 +1,20 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>All Students</title>
+    <title>Coach Submitted</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <tr th:each="student: ${studentList.students}">
-        <p th:text="'Name: ' + ${student.name}">
-        <p th:text="'Vassar ID: ' + ${student.vassarID}">
-        <div th:each="course, idx: ${courseList.courses}">
+<tr>
+    <p th:text="'Name: ' + ${student.name}">
+    <p th:text="'Vassar ID: ' + ${student.vassarID}">
+    <div th:each="course, idx: ${courseList.courses}">
         <span th:each="coursePref, indx: ${course.coursePrefs}"
               th:if="${coursePref.stu.name} == ${student.name} and ${coursePref.stu.vassarID} == ${student.vassarID}">
             <p th:text="${course.toString()}"/>
             <p th:text="${coursePref.toString()}"/>
         </span>
-        </div>
-    </tr>
+    </div>
+</tr>
 </body>
 </html>

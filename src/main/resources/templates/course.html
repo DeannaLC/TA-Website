@@ -1,15 +1,15 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Course Form Submission</title>
+    <title>Course Adding</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <h1>Form</h1>
 <form action="#" th:action="@{/course}" th:object="${course}" method="post">
-    <p>Course Name: <input type="text" th:field="*{className}" required/></p>
-    <p>Professor: <input type="text" th:field="*{professor}" required/></p>
-    <p>Section: <input type="number" th:field="*{section}" required</p>
+    <p>Course Name: <input type="text" th:field="*{name}" required/></p>
+    <p>Section: <input type="number" th:field="*{section}" required/></p>
+    <p>Professor: <input type="text" th:field="*{professor}" required</p>
     <p>Lab Start and End Time: <input type="time" th:field="*{labStart}" min="09:00" max="19:00" required/> <input type="time" th:field="*{labEnd}" min="09:00" max="21:00" required/></p>
     <p>Lab Day:<br>
         <input type="radio" id="M" th:field="*{labDay}" value="Monday"</input>

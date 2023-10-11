@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Coaches</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form action="#" th:action="@{/coaches}" method="post" th:object="${courseList}">
+    <div class = "nameField" th:object="${student}">
+        <p>Name: <input type="text" th:field="*{name}" required/></p>
+        <p>Student ID: <input type="number" th:field="*{vassarID}" th:minlength="9" th:maxlength="9" required/></p>
+    </div>
+    <tr th:each="course,idx : ${courseList.courses}">
+        <p th:text="${course.name}" />
+        <p th:text="'Professor: ' + ${course.professor}" />
+        <p> Availability: <br>
+            <input type="radio" id="available" th:field="*{courses[__${idx.index}__].curPref.available}" value="true"</input>
+            <label for="available">Available</label><br>
+            <input type="radio" id="not" th:field="*{courses[__${idx.index}__].curPref.available}" value="false"</input>
+            <label for="not">Unavailable</label><br>
+        </p>
+        <p>Course Grade:<br>
+            <input type="radio" name="grades" id="A" th:field="*{courses[__${idx.index}__].curPref.grade}" value="A" required</input>
+            <label for="A">A</label>
+            <input type="radio" name="grades" id="B" th:field="*{courses[__${idx.index}__].curPref.grade}" value="B"</input>
+            <label for="B">B</label>
+            <input type="radio" name="grades" id="C" th:field="*{courses[__${idx.index}__].curPref.grade}" value="C"</input>
+            <label for="C">C</label>
+            <input type="radio" name="grades" id="D" th:field="*{courses[__${idx.index}__].curPref.grade}" value="D"</input>
+            <label for="D">D</label>
+            <input type="radio" name="grades" id="F" th:field="*{courses[__${idx.index}__].curPref.grade}" value="F"</input>
+            <label for="F">F</label>
+        </p>
+        <p> Preference: <input th:field="*{courses[__${idx.index}__].curPref.stuPref}"/> </p>
+    </tr>
+    <div class = "comments" th:object="${student}">
+        <p>Extra Comments: <input type="text" th:field="*{comments}"/></p>
+    </div>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>

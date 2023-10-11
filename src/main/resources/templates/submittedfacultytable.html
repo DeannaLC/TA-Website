@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Coaches</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<style>
+    table, th, td {
+  border:1px solid black;
+}
+</style>
+<head>
+    <title>Student Submissions</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <form action="#" th:action="@{/faculty}" method="post" th:object="${courseList}">
+        <table style="width:100%">
+            <tr>
+                <th>&nbsp</th>
+                <th th:each="course: ${courseList.courses}" th:text="${course.name} + ' Section: ' + ${course.section}"></th>
+            </tr>
+            <tr th:each="student: ${studentList.students}"> <!--th:each="student, idx: ${studentList.studentList}">-->
+                <td>
+                    <p th:text="${student.name}"/>
+                    <p th:text="${student.vassarID}"/>
+                </td>
+                <div th:each="course, idx: ${courseList.courses}">
+                    <td>
+                        <span th:each="coursePref, indx: ${course.coursePrefs}"
+                              th:if="${coursePref.stu.name} == ${student.name} and ${coursePref.stu.vassarID} == ${student.vassarID}">
+                            <span th:if="${coursePref.stuPref != 0} and ${coursePref.available}">
+                                <p th:text="${coursePref.stu.name}">
+                                <p th:text="'Available: ' + ${coursePref.available}"/>
+                                <p th:text="'Grade: ' + ${coursePref.grade}"/>
+                                <p th:text="'Student Preference: ' + ${coursePref.stuPref}"/>
+                                <p th:text="'Faculty Preference: ' + ${coursePref.facPref}"/>
+                            </span>
+                            <span th:if="${coursePref.stuPref == 0} or ${coursePref.available == false}">
+                                <p>UNAVAILABLE</p>
+                            </span>
+                        </span>
+                    </td>
+                </div>
+            </tr>
+        </table>
+    </form>
+</head>
+<body>
+
+
+
+</body>
+</html>
+
+</body>
+</html>

@@ -1,12 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Course Form Submission</title>
+    <title>Course Added</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <h1>Result</h1>
-<p th:text="${coursesList.toString()}" />
+<p>Added Course: </p>
+<p th:text="'Name: ' + ${course.name}"/>
+<p th:text="'Section: ' + ${course.section}"/>
+<p th:text="'Professor: ' + ${course.professor}"/>
+<p th:text="'Lab Start: ' + ${course.labStart}"/>
+<p th:text="'Lab End: ' + ${course.labEnd}"/>
+<p th:text="'Lab Day: ' + ${course.labDay}"/>
 <!--
 <p th:text="'Course Name: ' + ${course.className}" />
 <p th:text="'Professor: ' + ${course.professor}" />

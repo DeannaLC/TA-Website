@@ -1,14 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>testing</title>
+    <title>All Courses</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <h1>Course Classes</h1>
-    <tr th:each="course: ${coursesList.courses}">
-        <p th:text="${course.className} + ' Section ' + ${course.section}"/>
-    </tr>
-    <a href="/course">Back</a>
+<tr th:each="course: ${courseList.courses}">
+    <p th:text="${course.name} + ' Section ' + ${course.section}"/>
+    <p th:text="'Professor: ' + ${course.professor}"/>
+    <p th:text="'Lab Start: ' + ${course.labStart}"/>
+    <p th:text="'Lab End: ' + ${course.labEnd}"/>
+    <p th:text="'Lab Day: ' + ${course.labDay}"/>
+</tr>
+<a href="/course">Back</a>
 </body>
 </html>
