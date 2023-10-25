@@ -71,6 +71,10 @@ public class CoursePref {
         return ret;
     }
 
+    public boolean checkStuChosen(){
+        return this.stu.getChosen();
+    }
+
     public void setFacPrefBackup(){
         this.facPrefBackup = this.facPref;
     }
@@ -79,6 +83,10 @@ public class CoursePref {
         if (this.facPref == 0 && this.facPrefBackup != 0){
             this.facPref = this.facPrefBackup;
         }
+    }
+
+    public int totalPref(){
+        return this.stuPref + this.facPref;
     }
 
 

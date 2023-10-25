@@ -6,8 +6,29 @@
 </head>
 <body>
 <h1>Remove Failed</h1>
-<p> Course inputted has already been added </p>
+<p> Course inputted has already been found </p>
+<p> New Submission: </p>
+    <p th:text="'Name: ' + ${course.name}"/>
+    <p th:text="'Section: ' + ${course.section}"/>
+    <p th:text="'Professor: ' + ${course.professor}"/>
+    <p th:text="'Lab Start: ' + ${course.labStart}"/>
+    <p th:text="'Lab End: ' + ${course.labEnd}"/>
+    <p th:text="'Lab Day: ' + ${course.labDay}"/>
+    <br>
+    <p> Previous Submission: </p>
+    <p th:text="'Name: ' + ${foundCourse.name}"/>
+    <p th:text="'Section: ' + ${foundCourse.section}"/>
+    <p th:text="'Professor: ' + ${foundCourse.professor}"/>
+    <p th:text="'Lab Start: ' + ${foundCourse.labStart}"/>
+    <p th:text="'Lab End: ' + ${foundCourse.labEnd}"/>
+    <p th:text="'Lab Day: ' + ${foundCourse.labDay}"/>
+<br>
+<form action="#" th:action="@{/courseoverride}" method="POST">
+    <p>Submit to Override</p>
+    <p><input type="submit" value="Submit" /></p>
+</form>
+<!--<p> Course inputted has already been added </p>
 <a href="/addedcourses">View Added Courses</a>
-<a href="/course">Submit a course</a>
+<a href="/course">Submit a course</a>-->
 </body>
 </html>

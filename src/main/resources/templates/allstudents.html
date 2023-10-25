@@ -11,8 +11,8 @@
         <div th:each="course, idx: ${courseList.courses}">
         <span th:each="coursePref, indx: ${course.coursePrefs}"
               th:if="${coursePref.stu.name} == ${student.name} and ${coursePref.stu.vassarID} == ${student.vassarID}">
-            <p th:text="${course.toString()}"/>
-            <p th:text="${coursePref.toString()}"/>
+            <p th:text="'Course Name: ' + ${course.name} + ' Preference: ' + ${coursePref.stuPref}"/>
+            <!--<p th:text="${coursePref.toString()}"/>-->
         </span>
         </div>
     </tr>

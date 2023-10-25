@@ -1,5 +1,7 @@
 package edu.vassar.independentstudy.bmc;
 
+import com.mongodb.lang.NonNull;
+
 import java.util.ArrayList;
 
 public class Course {
@@ -12,6 +14,7 @@ public class Course {
     int coachAmt;
     ArrayList<CoursePref> coursePrefs = new ArrayList<>();
     CoursePref curPref = new CoursePref();
+    ArrayList<Student> assigned = new ArrayList<>();
 
     enum Day{
         Monday,
@@ -64,6 +67,14 @@ public class Course {
         this.labDay = labDay;
     }
 
+    public ArrayList<Student> getAssigned(){
+        return this.assigned;
+    }
+
+    public void setAssigned(ArrayList<Student> assigned){
+        this.assigned = assigned;
+    }
+
     public String getLabStart() {
         return labStart;
     }
@@ -108,6 +119,10 @@ public class Course {
         this.curPref.setStu(s);
     }
 
+    public void resetCoursePref(){
+        this.coursePrefs = new ArrayList<>();
+    }
+
     public void addCurPref(){
         this.coursePrefs.add(this.curPref.coursePrefCopy());
     }
@@ -127,7 +142,12 @@ public class Course {
         ret.setLabEnd(this.labEnd);
         ret.setCoachAmt(this.coachAmt);
         ret.setCurPref(this.curPref);
+        ret.setAssigned(this.assigned);
         return ret;
+    }
+
+    public int coursePrefsSize(){
+        return this.coursePrefs.size();
     }
 
     public void transferData(Course ret){
@@ -217,14 +237,131 @@ public class Course {
         }
     }
 
+    /**
+     * remove coursePrefs w/ students that are unavailable/not interested
+     */
+    public void filterCoursePrefs(){
+        CoursePref cur;
+        ArrayList<CoursePref> filtered = new ArrayList<>();
+        for (int i = 0; i < this.coursePrefs.size(); i = i + 1){
+            cur = this.coursePrefs.get(i);
+            if (cur.getAvailable() && cur.getStuPref() != 0 && !cur.checkStuChosen()){
+                filtered.add(cur);
+            }
+        }
+        this.coursePrefs = filtered;
+    }
+
+    public void assignTwoStudents(){
+        Course act = this.courseCopy();
+        act.filterCoursePrefs();
+        act.sortCoursePrefs();
+        Student first;
+        Student second;
+        if (act.coursePrefs.size() > 0){
+            first = act.coursePrefs.get(0).getStu();
+            first.setChosen(true);
+            this.assigned.add(first);
+        }
+        if (act.coursePrefs.size() > 1) {
+            second = act.coursePrefs.get(1).getStu();
+            second.setChosen(true);
+            this.assigned.add(second);
+        }
+    }
+
+    public void assignOneStudent(){
+        Course act = this.courseCopy();
+        act.filterCoursePrefs();
+        act.sortCoursePrefs();
+        Student one;
+        if (act.coursePrefs.size() > 0){
+            one = act.coursePrefs.get(0).getStu();
+            one.setChosen(true);
+            this.assigned.add(one);
+        }
+    }
+
+    public void setChosenStudents(Student s){
+        String name = s.getName();
+        int id = s.getVassarID();
+        CoursePref cur;
+        for (int i = 0; i < this.coursePrefs.size(); i = i + 1){
+            cur = this.coursePrefs.get(i);
+            if (cur.getStu().getName().equals(name) && cur.getStu().getVassarID() == id){
+                cur.getStu().setChosen(true);
+                break;
+            }
+        }
+    }
+
+    /**
+     * will switch later to better sorting algorithm
+     *
+     * greatest to least sorting
+     */
+    public void sortCoursePrefs(){
+        CoursePref cur;
+        CoursePref max;
+        ArrayList<CoursePref> sort = new ArrayList<>();
+        while (this.coursePrefs.size() != 0){
+        //for (int i = 0; i < this.coursePrefs.size(); i = i + 1){
+            max = new CoursePref();
+            for (int k = 0; k < this.coursePrefs.size(); k = k + 1){
+                cur = this.coursePrefs.get(k);
+                if (cur.totalPref() > max.totalPref())
+                    max = cur;
+            }
+            sort.add(max);
+            this.coursePrefs.remove(max);
+        }
+        this.coursePrefs = sort;
+    }
+
+    public int courseVal(){
+        return this.section + Integer.parseInt(this.name.substring(this.name.length() - 3));
+    }
+
+    public String assignedStudents(){
+        String ret = this.name + ": ";
+        Student s;
+        for (int i = 0; i < this.assigned.size(); i = i + 1){
+            s = this.assigned.get(i);
+            if (i != this.assigned.size() - 1)
+                ret = ret + s.getName() + ", " ;
+            else
+                ret = ret + s.getName();
+        }
+        return ret;
+    }
+
+    public void filterWithNameID(String name, int id){
+        ArrayList<CoursePref> ret = new ArrayList<>();
+        CoursePref cur;
+        for (int i = 0; i < this.coursePrefs.size(); i = i + 1){
+            cur = this.coursePrefs.get(i);
+            if (cur.getStu().getName().equals(name) && cur.getStu().getVassarID() == id)
+                ret.add(cur);
+        }
+        this.coursePrefs = ret;
+    }
+
+    public void transferAssigned(Course transfer){
+        this.assigned = transfer.assigned;
+    }
+
+    public void fixName(Course course){
+        this.name = course.getName();
+    }
+
     public String toString(){
-        String ret = "Course Name: " + this.name + " Section: " + this.section;
-        /**CoursePref cur;
+        String ret = " Section: " + this.section;
+        System.out.println("SIZE" + coursePrefs.size());
+        CoursePref cur;
         for (int i = 0; i < this.coursePrefs.size(); i = i + 1){
             cur = this.coursePrefs.get(i);
             ret = ret + cur.toString();
         }
-        return ret;**/
         return ret;
     }
 

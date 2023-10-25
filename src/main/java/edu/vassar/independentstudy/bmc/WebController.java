@@ -3,16 +3,11 @@ package edu.vassar.independentstudy.bmc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
-
 @Controller
 public class WebController {
     CourseList courses = new CourseList();
@@ -23,6 +18,8 @@ public class WebController {
     StudentRepository studentRepo;
     boolean coursesAdded = false;
     boolean studentsAdded = false;
+    Course curCourse;
+    Student curStudent;
 
     //for loading previous data
     @ModelAttribute("courseList")
@@ -49,6 +46,32 @@ public class WebController {
         return this.students;
     }
 
+    public static boolean checkNumberSequence(int[] vals){
+        int min;
+        int idx = -1;
+        int[] check;
+        if (vals != null){
+            check = new int[vals.length];
+            for (int i = 0; i < vals.length; i = i + 1){
+                min = Integer.MAX_VALUE;
+                for (int k = 0; k < vals.length; k = k + 1){
+                    if (vals[k] < min){
+                        min = vals[k];
+                        idx = k;
+                    }
+                }
+                check[i] = min;
+                vals[idx] = Integer.MAX_VALUE;
+            }
+            for (int i = 0; i < vals.length - 1; i = i + 1){
+                if (check[i] + 1 != check[i + 1]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void updateCourseRepo(){
         courseRepo.deleteAll();
         Course add;
@@ -68,6 +91,12 @@ public class WebController {
     @PostMapping("/course")
     public String courseSubmit(@ModelAttribute Course course, Model model){
         if (courses.findCourse(course.getName(), course.getSection()) != null){
+            Course found = courses.findCourse(course.getName(), course.getSection());
+            this.curCourse = course.courseCopy();
+            model.addAttribute("course", course);
+            model.addAttribute("foundCourse", found);
+            System.out.println(course.toString());
+            System.out.println(found.toString());
             return "failedadd";
         }
         course.transformTime();
@@ -77,6 +106,20 @@ public class WebController {
         model.addAttribute("course", course);
         model.addAttribute("courseList", courses);
         return "coursesubmit";
+    }
+
+    @GetMapping("/courseoverride")
+    public String overrideCourse(Model model, @ModelAttribute Course course){
+        return "courseoverride";
+    }
+
+    @PostMapping("/courseoverride")
+    public String overrideCourse2(@ModelAttribute Course course, Model model){
+        courses.removeByNameSection(curCourse.getName(), curCourse.getSection());
+        courses.addCourse(curCourse);
+        System.out.println("3" + courses.toString());
+        this.updateCourseRepo();
+        return "courseoverride";
     }
 
     @GetMapping("/addedcourses")
@@ -120,6 +163,21 @@ public class WebController {
 
     @PostMapping("/coaches")
     public String submittedApp(Model model, @ModelAttribute CourseList modify, @ModelAttribute Student student){
+        if (students.findByNameId(student.getName(), student.getVassarID()) != null){
+            /**Student found = students.findByNameId(student.getName(), student.getVassarID());
+            //CourseList filtered = this.courses.filteredCopy(found.getName(), found.getVassarID());
+            modify.fixAllNames(this.courses);
+            this.curStudent = student.studentCopy();
+            System.out.println("HI" + modify.toString());
+            System.out.println("HI AGAIN" + this.courses.toString());
+            model.addAttribute("filteredNew", modify);
+            model.addAttribute("student", student);
+            model.addAttribute("foundStudent", found);
+            model.addAttribute("filteredOld", this.courses);
+            return "failedcoachapp";**/
+
+            return "failedcoachtemp";
+        }
         modify.setStudents(student);
         modify.addCurPrefs();
         this.courses.transferAllStuPrefs(modify);
@@ -157,7 +215,7 @@ public class WebController {
     public String facultyPost(Model model, @ModelAttribute CourseList editable){
         courses.transferAllFacPrefs(editable);
         courses.changeAllFacPrefs();
-        //this.updateCourseRepo();
+        this.updateCourseRepo();
         model.addAttribute("courseList", courses);
         model.addAttribute("studentList", students);
         return "submittedfacultytable";
@@ -178,4 +236,28 @@ public class WebController {
         return "deleted";
     }
 
+    @GetMapping("/assign")
+    public String assign(Model model){
+        return "assign";
+    }
+
+    @PostMapping("/assign")
+    public String assignDone(Model model){
+        courses.assignAll();
+        this.updateCourseRepo();
+        System.out.println("hi " + courses.toString());
+        model.addAttribute("courseList", courses.courseListCopy());
+        return "assignDone";
+    }
+
+    @GetMapping("/assignments")
+    public String viewAssignments(Model model){
+        model.addAttribute("assigned", this.courses);
+        return "assignments";
+    }
+
+    @PostMapping("/assignments")
+    public String viewAssignmentsPost(Model model){
+        return "assignments";
+    }
 }

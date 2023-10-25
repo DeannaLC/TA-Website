@@ -4,8 +4,17 @@ public class Student {
     String name;
     String comments = "blank";
     int vassarID;
+    boolean chosen = false;
 
     public Student(){}
+
+    public void setChosen(boolean chosen){
+        this.chosen = chosen;
+    }
+
+    public boolean getChosen(){
+        return this.chosen;
+    }
 
     public String getName() {
         return name;
@@ -29,6 +38,15 @@ public class Student {
 
     public void setVassarID(int vassarID) {
         this.vassarID = vassarID;
+    }
+
+    public Student studentCopy(){
+        Student s = new Student();
+        s.vassarID = this.vassarID;
+        s.name = this.name;
+        s.chosen = this.chosen;
+        s.comments = this.comments;
+        return s;
     }
 
     public String toString(){

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Course Add Failed</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Application Error</h1>
+<p> Submission with same name and ID already found </p>
+<p> New Submission: </p>
+<p th:text="'Name: ' + ${student.name}"/>
+<p th:text="'Vassar ID: ' + ${student.vassarID}"/>
+<p th:text="'Comments: ' + ${student.comments}"/>
+<br>
+<!--
+<tr th:each="cour: ${filteredNew.courses}">
+    <tr th:each="pref: ${cour.coursePrefs}">
+    <p th:text="${cour.name} + ' Preference: ' + ${pref.stuPref}">
+    </tr>
+</tr>-->
+<p> New Preferences </p>
+<span th:each="cour: ${filteredNew.courses}">
+    <div th:each="pref: ${cour.coursePrefs}">
+        <p th:text="${cour.name} + ' Preference: ' + ${pref.stuPref}">
+    </div>
+</span>
+
+<br>
+
+<p> Old Submission: </p>
+<p th:text="'Name: ' + ${foundStudent.name}"/>
+<p th:text="'Vassar ID: ' + ${foundStudent.vassarID}"/>
+<p th:text="'Comments: ' + ${foundStudent.comments}"/>
+<br>
+
+<p>Old Preferences</p>
+<span th:each="course, idx: ${filteredOld.courses}">
+    <div th:each="coursePref: ${course.coursePrefs}"
+          th:if="${coursePref.stu.name} == ${student.name} and ${coursePref.stu.vassarID} == ${student.vassarID}"/>
+            <p th:text="${course.name} + ' Preference: '"/><!-- + ${coursePref.stuPref}"/>-->
+    </div>
+</span>
+</body>
+
+
+<!--<p> Previous Submission: </p>
+<p th:text="'Name: ' + ${foundCourse.name}"/>
+<p th:text="'Section: ' + ${foundCourse.section}"/>
+<p th:text="'Professor: ' + ${foundCourse.professor}"/>
+<p th:text="'Lab Start: ' + ${foundCourse.labStart}"/>
+<p th:text="'Lab End: ' + ${foundCourse.labEnd}"/>
+<p th:text="'Lab Day: ' + ${foundCourse.labDay}"/>-->
+
+
+<br>
+<form action="#" th:action="@{/courseoverride}" method="POST">
+    <p>Submit to Override</p>
+    <p><input type="submit" value="Submit" /></p>
+</form>
+<a href="/coaches">Submit New Coach App</a>
+</body>
+</html>
